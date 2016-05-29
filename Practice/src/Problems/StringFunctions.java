@@ -23,7 +23,7 @@ public class StringFunctions {
 		}
 		return -1;
 	}
-
+	
 	public static void mergeRoutine(int[] arr, int l, int m, int r){
 
 		int n1 = m - l + 1;
@@ -47,7 +47,7 @@ public class StringFunctions {
 
 		while(i<n1 && j<n2){
 			if(L[i]<=R[j]){
-				arr[k] = R[i];
+				arr[k] = L[i];
 				i++;
 			}
 			else{
@@ -81,8 +81,15 @@ public class StringFunctions {
 	}
 
 	public static void quickSort(int[] arr,int l, int r){
+		
+		if(l<r){
+			int pi = partitionRoutine(arr,l,r);
+			quickSort(arr,l,pi-1);
+			quickSort(arr,pi+1,r);
+		}
 
 	}
+	
 	public static int partitionRoutine(int[] arr, int low, int high){
 		int pivot = arr[high];
 		int i = low;
@@ -96,26 +103,29 @@ public class StringFunctions {
 		}
 		
 		HelperFunction.swapArray(arr, i, high);
-		
 		return i;
 	}
+	
 	public static void main(String[] args){
-		int[] a = {5,4,3,2,1,0,-1};
+		int[] a = {9,5,4,3,10,1,0,-1,7,8};
 		int l = 0;
 		int r = a.length-1;
 		int m = (l+r)/2;
 		long startTime = System.nanoTime();
+		
 		////////////////////////////////////////////////////
 
 		//int id = binarySearch(a,7);
 		//mergeRoutine(a,l,m,r);
 		//mergeSort(a,l,r);
-		int pivotID = partitionRoutine(a,0,a.length-1);
-		System.out.println(pivotID);
-		//HelperFunction.printArray(a);
-		///////////////////////////////////////////////////		
+		quickSort(a,l,r);
+		
+		//
+		///////////////////////////////////////////////////
+		
 		long endTime = System.nanoTime();
 		long duration  = (endTime - startTime)/1000;
+		HelperFunction.printArray(a);
 		System.out.println("Time: " +  duration + " units");
 	}
 }
